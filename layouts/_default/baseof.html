@@ -27,7 +27,7 @@
 
   <!-- SCSS for main page -->
   {{ with "sass/main.scss" }}
-    {{ $style := resources.Get . | toCSS | minify | fingerprint }}
+    {{ $style := resources.Get . | toCSS | postCSS | minify | fingerprint }}
     <link type="text/css" rel="stylesheet" href="{{ $style.Permalink }}">
   {{ end }}
 
