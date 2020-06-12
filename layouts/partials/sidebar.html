@@ -13,18 +13,52 @@
         {{ end }}
       {{ end }}
 
-      <h1>{{ .Site.Title }}</h1>
-
-      {{ with .Site.Params.description }}
-      <p class="lead">{{.}}</p>
-      {{end}}
+      {{ if eq $.Params.lang "jp" }}
+        <h1>{{ $.Site.Params.profile.jpFullname }}</h1>
+        <div class="company">
+          {{ .Site.Params.profile.jpCompany | safeHTML }}<br />
+          {{ .Site.Params.profile.jpDepartment | safeHTML }}
+        </div>
+        <div class="jobtitle">
+          {{ .Site.Params.profile.jpJobTitle }}
+        </div>
+      {{ else }}
+        <h1>{{ $.Site.Params.profile.fullname }}</h1>
+        <div class="jobtitle">
+          {{ .Site.Params.profile.jobTitle }}
+        </div>
+        <div class="company">
+          {{ .Site.Params.profile.company | safeHTML }}<br />
+          {{ .Site.Params.profile.department | safeHTML }}
+        </div>
+      {{ end }}
+      
+      <div class="switch-lang">
+        {{ if eq $.Params.lang "jp" }}
+          <a href="{{ $.Site.BaseURL }}">[English]</a>
+        {{ else }}
+          <a href="{{ $.Site.BaseURL }}jp/">[Japanese]</a>
+        {{ end }}
+      </div>
     </div>
+
+    <section class="social-icons">
+      <ul class="sidebar-nav">
+        {{ range $item := .Site.Params.socialIcons }}
+        <li>
+          <a href="{{ $item.url }}" rel="me" title="{{ $item.title }}">
+            <i class="fab {{ $item.icon }}" aria-hidden="true"></i>
+            <span>{{ $item.title }}</span>
+          </a>
+        </li>
+        {{ end }}
+      </ul>
+    </section>
+
+    <hr/>
 
     <nav>
       <ul class="sidebar-nav">
-        <li>
-          <a href="{{ .Site.BaseURL }}">Home</a>
-        </li>
         {{ range .Site.Menus.main -}}
         <li>
           <a href="{{.URL}}"> {{ .Name }} </a>
@@ -33,12 +67,5 @@
       </ul>
     </nav>
 
-    <section class="social-icons">
-      {{ range $item := .Site.Params.socialIcons }}
-      <a href="{{ $item.url }}" rel="me" title="{{ $item.title }}">
-        <i class="fab {{ $item.icon }}" aria-hidden="true"></i>
-      </a>
-      {{ end }}
-    </section>
   </div>
 </aside>

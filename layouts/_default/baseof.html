@@ -3,72 +3,83 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="{{if .IsHome}}{{ $.Site.Params.description }}{{else}}{{.Description}}{{end}}" />
   {{ hugo.Generator }}
 
-  {{ if .IsHome -}}
-  <title>{{ .Site.Title }}</title>
-  {{- else -}}
+  <!-- Page title -->
+  {{ if and (not .IsHome) (.Title) -}}
   <title>{{ .Title }} &middot; {{ .Site.Title }}</title>
+  {{- else -}}
+  <title>{{ .Site.Title }}</title>
   {{- end }}
 
-  <meta name="description" content="{{if .IsHome}}{{ $.Site.Params.description }}{{else}}{{.Description}}{{end}}" />
-
+  <!-- SEO -->
   {{ partial "seo.html" . }}
 
-  <link type="text/css"
-        rel="stylesheet"
-        href="{{ .Site.BaseURL }}css/print.css"
-        media="print">
-
-  <link type="text/css"
-        rel="stylesheet"
-        href="{{ .Site.BaseURL }}css/poole.css">
-
-  <link type="text/css"
-        rel="stylesheet"
-        href="{{ .Site.BaseURL }}css/hyde.css">
+  <!-- Default style sheets -->
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/skeleton.css">
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/normalize.css">
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/poole.css">
+  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/hyde.css">
 
   {{ partial "theme-color.html" . }}
 
+  <!-- SCSS for main page -->
+  {{ with "sass/main.scss" }}
+    {{ $style := resources.Get . | toCSS | minify | fingerprint }}
+    <link type="text/css" rel="stylesheet" href="{{ $style.Permalink }}">
+  {{ end }}
+
+  <!-- Custom CSS -->
   {{ range $.Site.Params.customCss -}}
-  <link type="text/css" rel="stylesheet" href="{{ $.Site.BaseURL }}{{ . }}">
+    <link type="text/css" rel="stylesheet" href="{{ $.Site.BaseURL }}{{ . }}">
   {{- end}}
 
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
+  {{ range $.Params.customCss -}}
+    <link type="text/css" rel="stylesheet" href="{{ . }}">
+  {{- end}}
 
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
-        integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
-        crossorigin="anonymous" />
+  <!-- Custom JS -->
+  {{ range $.Site.Params.customJs -}}
+    <script src="{{ $.Site.BaseURL }}{{ . }}"></script>
+  {{- end}}
 
-  <link rel="apple-touch-icon-precomposed"
-        sizes="144x144"
-        href="/apple-touch-icon-144-precomposed.png">
+  {{ range $.Params.customJs -}}
+    <script src="{{ . }}"></script>
+  {{- end}}
 
-  <link rel="shortcut icon" href="/favicon.png">
+  <!-- Google Font (Open Sans) -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
+
+  <!-- Font awasome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ $.Site.BaseURL }}/images/favicon.png">
 
   <!-- RSS -->
   {{ range .AlternativeOutputFormats -}}
     {{ printf `<link href="%s" rel="%s" type="%s" title="%s" />` .Permalink .Rel .MediaType.Type $.Site.Title | safeHTML }}
   {{ end -}}
 </head>
+
 <body>
-  {{ partial "sidebar.html" . }}
+  <div class="main-container">
+    {{ partial "sidebar.html" . }}
 
-  <main class="content container">
-  {{ block "main" . -}}{{- end }}
-  </main>
-
-  {{ partial "footer.html" . }}
+    <main class="content container">
+    {{ block "main" . -}}{{- end }}
+    {{ partial "footer.html" . }}
+    </main>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"
           integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0="
           crossorigin="anonymous"></script>
-
-  {{ range $.Site.Params.customJs -}}
-  <script src="{{ $.Site.BaseURL }}{{ . }}"></script>
-  {{- end}}
 
   {{ template "_internal/google_analytics_async.html" . }}
 </body>
