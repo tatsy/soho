@@ -26,7 +26,7 @@
   {{ partial "theme-color.html" . }}
 
   <!-- SCSS for main page -->
-  {{ with "sass/main.scss" }}
+  {{ with "scss/main.scss" }}
     {{ $style := resources.Get . | toCSS | postCSS | minify | fingerprint }}
     <link type="text/css" rel="stylesheet" href="{{ $style.Permalink }}">
   {{ end }}
