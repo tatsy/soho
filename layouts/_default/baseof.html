@@ -17,11 +17,11 @@
   {{ partial "seo.html" . }}
 
   <!-- Default style sheets -->
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/skeleton.css">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/normalize.css">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/print.css" media="print">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/poole.css">
-  <link type="text/css" rel="stylesheet" href="{{ .Site.BaseURL }}css/hyde.css">
+  <link type="text/css" rel="stylesheet" rel="preload" href="{{ .Site.BaseURL }}css/skeleton.css">
+  <link type="text/css" rel="stylesheet" rel="preload" href="{{ .Site.BaseURL }}css/normalize.css">
+  <link type="text/css" rel="stylesheet" rel="preload" href="{{ .Site.BaseURL }}css/print.css" media="print">
+  <link type="text/css" rel="stylesheet" rel="preload" href="{{ .Site.BaseURL }}css/poole.css">
+  <link type="text/css" rel="stylesheet" rel="preload" href="{{ .Site.BaseURL }}css/hyde.css">
 
   {{ partial "theme-color.html" . }}
 
@@ -42,15 +42,15 @@
 
   <!-- Custom JS -->
   {{ range $.Site.Params.customJs -}}
-    <script src="{{ $.Site.BaseURL }}{{ . }}"></script>
+    <script src="{{ $.Site.BaseURL }}{{ . }}" async></script>
   {{- end}}
 
   {{ range $.Params.customJs -}}
-    <script src="{{ . }}"></script>
+    <script src="{{ . }}" async></script>
   {{- end}}
 
   <!-- Font awasome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+  <link rel="stylesheet" rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
   <!-- Apple touch icon -->
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
@@ -78,7 +78,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js"
           integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0="
-          crossorigin="anonymous"></script>
+          crossorigin="anonymous" async></script>
 
   {{ template "_internal/google_analytics_async.html" . }}
 </body>
