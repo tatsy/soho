@@ -42,11 +42,11 @@
 
   <!-- Custom JS -->
   {{ range $.Site.Params.customJs -}}
-    <script src="{{ $.Site.BaseURL }}{{ . }}" async></script>
+    <script src="{{ $.Site.BaseURL }}{{ . }}"></script>
   {{- end}}
 
   {{ range $.Params.customJs -}}
-    <script src="{{ . }}" async></script>
+    <script src="{{ . }}"></script>
   {{- end}}
 
   <!-- Font awasome -->
