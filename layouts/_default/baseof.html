@@ -49,9 +49,6 @@
     <script src="{{ . }}"></script>
   {{- end}}
 
-  <!-- Google Font (Open Sans) -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700&display=swap">
-
   <!-- Font awasome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
 
@@ -59,7 +56,9 @@
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" href="{{ $.Site.BaseURL }}/images/favicon.png">
+  <link rel="icon" type="image/png" href="{{ $.Site.BaseURL }}/images/favicon-16.png" size="16x16">
+  <link rel="icon" type="image/png" href="{{ $.Site.BaseURL }}/images/favicon-32.png" size="32x32">
+  <link rel="icon" type="image/png" href="{{ $.Site.BaseURL }}/images/favicon-64.png" size="64x64">
 
   <!-- RSS -->
   {{ range .AlternativeOutputFormats -}}
