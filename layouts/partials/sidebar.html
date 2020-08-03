@@ -6,11 +6,18 @@
         <img src="https://www.gravatar.com/avatar/{{md5 .}}?s=200&d=mp" class="img-circle img-headshot center" alt="Gravatar">
       </div>
       {{ else }}
-        {{ with .Site.Params.profilePicture }}
         <div class="author-image">
-          <img src="{{ $.Site.BaseURL }}{{ . }}" class="img-circle img-headshot center" alt="Profile Picture">
+          <picture>
+            {{ if .Site.Params.profilePictureWebP }}
+              {{ with .Site.Params.profilePictureWebP }}
+                <source type="image/webp" srcset="{{ $.Site.BaseURL }}{{ . }}" />
+              {{ end }}
+            {{ end }}
+            {{ with .Site.Params.profilePicture }}
+              <img src="{{ $.Site.BaseURL }}{{ . }}" class="img-circle img-headshot center" alt="Profile Picture" />
+            {{ end }}
+          </picture>
         </div>
-        {{ end }}
       {{ end }}
 
       {{ if eq $.Params.lang "jp" }}
